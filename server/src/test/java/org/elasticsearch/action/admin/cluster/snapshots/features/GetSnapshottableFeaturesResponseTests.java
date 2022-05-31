@@ -29,6 +29,7 @@ public class GetSnapshottableFeaturesResponseTests extends AbstractWireSerializi
                 10,
                 () -> new GetSnapshottableFeaturesResponse.SnapshottableFeature(
                     randomAlphaOfLengthBetween(4, 10),
+                    randomAlphaOfLengthBetween(5, 10),
                     randomAlphaOfLengthBetween(5, 10)
                 )
             )
@@ -45,15 +46,19 @@ public class GetSnapshottableFeaturesResponseTests extends AbstractWireSerializi
             .stream()
             .map(feature -> feature.getFeatureName())
             .collect(Collectors.toSet());
-        return new GetSnapshottableFeaturesResponse(
+
+
+        GetSnapshottableFeaturesResponse response = new GetSnapshottableFeaturesResponse(
             randomList(
                 minSize,
                 10,
                 () -> new GetSnapshottableFeaturesResponse.SnapshottableFeature(
                     randomValueOtherThanMany(existingFeatureNames::contains, () -> randomAlphaOfLengthBetween(4, 10)),
+                    randomAlphaOfLengthBetween(5, 10),
                     randomAlphaOfLengthBetween(5, 10)
                 )
             )
         );
+        return  response;
     }
 }

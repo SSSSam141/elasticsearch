@@ -74,14 +74,18 @@ public class GetSnapshottableFeaturesResponse extends ActionResponse implements 
         private final String featureName;
         private final String description;
 
-        public SnapshottableFeature(String featureName, String description) {
+        private final String SystemIndexName;
+
+        public SnapshottableFeature(String featureName, String description, String SIName) {
             this.featureName = featureName;
             this.description = description;
+            this.SystemIndexName = SIName;
         }
 
         public SnapshottableFeature(StreamInput in) throws IOException {
             featureName = in.readString();
             description = in.readString();
+            SystemIndexName = in.readString();
         }
 
         public String getFeatureName() {
@@ -92,10 +96,13 @@ public class GetSnapshottableFeaturesResponse extends ActionResponse implements 
             return description;
         }
 
+        public String getSystemIndexName() { return SystemIndexName; };
+
         @Override
         public void writeTo(StreamOutput out) throws IOException {
             out.writeString(featureName);
             out.writeString(description);
+            out.writeString(SystemIndexName);
         }
 
         @Override
@@ -103,6 +110,7 @@ public class GetSnapshottableFeaturesResponse extends ActionResponse implements 
             builder.startObject();
             builder.field("name", featureName);
             builder.field("description", description);
+            builder.field("system_index_name", SystemIndexName);
             builder.endObject();
             return builder;
         }
